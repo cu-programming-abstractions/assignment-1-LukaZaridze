@@ -1,25 +1,43 @@
 /* File: OnlyConnect.cpp
  *
- * TODO: Edit these comments to describe anything interesting or noteworthy in your implementation.
+ * This program implements the function `onlyConnectize`, which converts a given string by
+ * following a specific set of rules for transforming characters.
  *
- * TODO: Edit these comments to leave a puzzle for your section leader to solve!
+ * Puzzle: Can you figure out the rule that turns the input string into the expected output?
+ * Hint: The result contains only specific characters from the input string in uppercase.
  */
+
 #include "OnlyConnect.h"
 using namespace std;
 
 string onlyConnectize(string phrase) {
-    /* TODO: The next few lines just exist to make sure you don't get compiler
-     * warning messages when this function isn't implemented. Delete this
-     * comment and the next few lines, then implement this function.
-     */
-    (void) phrase;
-    return "";
+    string result = "";
+
+    // Loop through each character in the phrase
+    for (char c : phrase) {
+        // Check if the character is an alphabet letter
+        if (isalpha(c)) {
+            // If the character is a lowercase letter, convert it to uppercase
+            if (islower(c)) {
+                result += toupper(c);
+            }
+            // If the character is an uppercase letter, add it as-is
+            else {
+                result += c;
+            }
+        }
+    }
+
+    // Remove all vowels (A, E, I, O, U) from the result
+    string filteredResult = "";
+    for (char c : result) {
+        if (c != 'A' && c != 'E' && c != 'I' && c != 'O' && c != 'U') {
+            filteredResult += c;
+        }
+    }
+
+    return filteredResult;
 }
-
-
-
-
-
 
 /* * * * * * Provided Test Cases * * * * * */
 #include "GUI/SimpleTest.h"
@@ -34,20 +52,17 @@ PROVIDED_TEST("Converts lower-case to upper-case.") {
     EXPECT_EQUAL(onlyConnectize("uppercase"), "PPRCS");
 }
 
-/* TODO: You will need to add your own tests into this suite of test cases. Think about the sorts
- * of inputs we tested here, and, importantly, what sorts of inputs we *didn't* test here. Some
- * general rules of testing:
- *
- *    1. Try extreme cases. What are some very large cases to check? What are some very small cases?
- *
- *    2. Be diverse. There are a lot of possible inputs out there. Make sure you have tests that account
- *       for cases that aren't just variations of one another.
- *
- *    3. Be sneaky. Don't just try standard inputs. Try weird ones that you wouldn't expect anyone to
- *       actually enter, but which are still perfectly legal.
- *
- * Happy testing!
- */
+/* * * * * * Student Test Case * * * * * */
+STUDENT_TEST("Handles input with mixed case and vowels.") {
+    EXPECT_EQUAL(onlyConnectize("aBcDeFgH"), "BCDFGH"); // All vowels removed
+    EXPECT_EQUAL(onlyConnectize("helloWorld"), "HLLWRLD"); // Vowels removed, lowercase to uppercase
+}
+
+/* * * * * * Puzzle + Hint * * * * * */
+//
+// Puzzle: What pattern can you deduce about the characters that remain in the output after processing the string?
+// Hint: Only some letters make it to the final string, and the case of the letters changes.
+//
 
 
 
